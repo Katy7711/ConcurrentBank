@@ -1,11 +1,12 @@
 package com.example.concurrentbank;
 
-import static com.example.concurrentbank.ConcurrentBank.LOCK;
-
+import java.util.concurrent.locks.ReentrantLock;
 import lombok.Data;
 
 @Data
 public class BankAccount {
+
+  public static final ReentrantLock LOCK = new ReentrantLock();
 
   private final int id;
   public static int count = 1;
