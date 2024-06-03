@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class ConcurrentBank {
 
-  private final ReentrantLock lock = new ReentrantLock();
+  public static final ReentrantLock LOCK = new ReentrantLock();
   private List<BankAccount> bankAccountList;
 
   public ConcurrentBank() {
@@ -23,7 +23,7 @@ public class ConcurrentBank {
   }
 
   public void transfer(BankAccount bankAccount1, BankAccount bankAccount2, int sum) {
-    lock.lock();
+    LOCK.lock();
     try {
       if (bankAccount1.getSum() == 0 || bankAccount1.getSum() < sum) {
         throw new RuntimeException("Недостаточно средств");
@@ -31,7 +31,7 @@ public class ConcurrentBank {
       bankAccount1.setSum(bankAccount1.getSum() - sum);
       bankAccount2.setSum(bankAccount2.getSum() + sum);
     } finally {
-      lock.unlock();
+      LOCK.unlock();
     }
   }
 

@@ -1,6 +1,7 @@
 package com.example.concurrentbank;
 
-import java.util.concurrent.locks.ReentrantLock;
+import static com.example.concurrentbank.ConcurrentBank.LOCK;
+
 import lombok.Data;
 
 @Data
@@ -14,30 +15,29 @@ public class BankAccount {
     this.id = count++;
   }
 
-  private final ReentrantLock lock = new ReentrantLock();
 
   public void deposit(BankAccount bankAccount, int sum) {
-    lock.lock();
+    LOCK.lock();
     try {
       if (bankAccount.getSum() == 0) {
         bankAccount.setSum(sum);
       }
       bankAccount.setSum(bankAccount.getSum() + sum);
     } finally {
-      lock.unlock();
+      LOCK.unlock();
     }
   }
 
 
   public void withdraw(BankAccount bankAccount, int sum) {
-    lock.lock();
+    LOCK.lock();
     try {
       if (bankAccount.getSum() == 0 || bankAccount.getSum() < sum) {
         throw new RuntimeException("Недостаточно средств");
       }
       bankAccount.setSum(bankAccount.getSum() - sum);
     } finally {
-      lock.unlock();
+      LOCK.unlock();
     }
   }
 
