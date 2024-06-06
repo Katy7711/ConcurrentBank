@@ -6,14 +6,14 @@ import lombok.Data;
 @Data
 public class BankAccount {
 
-  public static final ReentrantLock LOCK = new ReentrantLock();
-
+  public static ReentrantLock LOCK;
   private final int id;
   public static int count = 1;
   private int sum;
 
   public BankAccount() {
     this.id = count++;
+    LOCK = new ReentrantLock();
   }
 
 
