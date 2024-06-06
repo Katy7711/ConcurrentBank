@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class BankAccount {
 
-  public static ReentrantLock LOCK;
+  public ReentrantLock LOCK;
   private final int id;
   public static int count = 1;
   private int sum;
